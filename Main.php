@@ -30,7 +30,6 @@ if (  isset($_POST["send"] ) ===  true ) {
     if( $err_msg1 === "" && $err_msg2 === "" ){
         $fp = fopen( "data.txt" ,"a" );
         fwrite( $fp ,  $name."\t".$comment."\t".$history."\n");
-        $message ="書き込みに成功しました。";
     }
 
 }
@@ -39,7 +38,7 @@ $fp = fopen("data.txt","r");
 $fpCount = fopen("data.txt","r");
 for ($count=0; fgets($fpCount); $count++){
 //var_dump($count);
-if ($count >=10){
+if ($count >=20){
   fopen("data.txt","w");
     }
 }
@@ -68,8 +67,6 @@ while( $res = fgets( $fp)){
         <!-- ユーザーIDにHTMLタグが含まれても良いようにエスケープする -->
         <p>ようこそ<u><?php echo htmlspecialchars($_SESSION["NAME"], ENT_QUOTES); ?></u>さん</p>  <!-- ユーザー名をechoで表示 -->
 
-
-        <?php echo $message; ?>
         <form method="post" action="Main.php">
         名前：<input type="text" name="name" id="nameId" value="<?php echo $_SESSION["NAME"]; ?>" >
             <?php echo $err_msg1; ?><br>
