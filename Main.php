@@ -2,7 +2,9 @@
 session_start();
 //require_once("SignUp.php");
 //var_dump($_SESSION);
+require_once('./usefulClass.php');
 
+$var = new chkValiable;
 
 // ログイン状態チェック
 if (!isset($_SESSION["NAME"])) {
@@ -19,6 +21,9 @@ $message ="";
 $name = ( isset( $_POST["name"] ) === true ) ?$_POST["name"]: "";
 $comment  = ( isset( $_POST["comment"] )  === true ) ?  trim($_POST["comment"])  : "";
 
+$var = new chkValiable;
+$var->dumpValiable($comment);
+
 //$history = (isset( $_POST["history"] ) === true) ?$_POST["history"]: "";
 $history = date("Y/m/d");
 //投稿がある場合のみ処理を行う
@@ -30,6 +35,20 @@ if (  isset($_POST["send"] ) ===  true ) {
     if( $err_msg1 === "" && $err_msg2 === "" ){
         $fp = fopen( "data.txt" ,"a" );
         fwrite( $fp ,  $name."\t".$comment."\t".$history."\n");
+
+        $message ="書き込みに成功しました。";
+
+
+        $getData    = new DbManager;
+        $getData->pdo();
+        //$gotData = $getData->select('SELECT * FROM userData');
+        $getComment = 'test';
+        $tableName  = 'userData';
+        $columnName = 'comment';
+        $comment    = $_POST["comment"];
+        $userName   = $_POST["name"];
+        $gotData    = $getData->insertTable($userName, $comment);
+        $var->dumpValiable($gotData);
     }
 
 }
@@ -53,6 +72,16 @@ while( $res = fgets( $fp)){
     $dataArr[]= $arr;
 }
 
+// $getData = new DbManager;
+// $getData->pdo();
+// //$gotData = $getData->select('SELECT * FROM userData');
+// $getComment = 'test';
+// $tableName  = 'userData';
+// $columnName = 'comment';
+// $text = $_POST["comment"];
+// $name = $_POST["name"];
+// $gotData    = $getData->insertTable($name, $text);
+// $var->dumpValiable($gotData);
 
 ?>
 
@@ -68,7 +97,7 @@ while( $res = fgets( $fp)){
         <p>ようこそ<u><?php echo htmlspecialchars($_SESSION["NAME"], ENT_QUOTES); ?></u>さん</p>  <!-- ユーザー名をechoで表示 -->
 
         <form method="post" action="Main.php">
-        名前：<input type="text" name="name" id="nameId" value="<?php echo $_SESSION["NAME"]; ?>" >
+        名前：<input type="text" name="name" id="nameId" value="" >
             <?php echo $err_msg1; ?><br>
             コメント：<input  name="comment" id="commentId" value="<?php echo $comment; ?>">
             <?php echo $err_msg2; ?><br>

@@ -1,11 +1,16 @@
 <?php
 // セッション開始
 session_start();
+require_once('./usefulClass.php');
 
 $db['host'] = "localhost";  // DBサーバのURL
 $db['user'] = "observer";  // ユーザー名
 $db['pass'] = "test";  // ユーザー名のパスワード
 $db['dbname'] = "bullteinBoard";  // データベース名
+
+$var = new chkValiable;
+$var->dumpValiable($db['dbname']);
+
 
 // エラーメッセージ、登録完了メッセージの初期化
 $errorMessage  = "";
@@ -18,35 +23,31 @@ $dsn           = "";
 if (isset($_POST["signUp"])) {
     // 1. ユーザIDの入力チェック
     if (empty($_POST["username"])) {  // 値が空のとき
-       $errorMessage = 'ユーザーIDが未入力です。';
+       $errorMessage = "ユーザーIDが未入力です。";
     } else if (empty($_POST["password"])) {
-       $errorMessage = 'パスワードが未入力です。';
+       $errorMessage = "パスワードが未入力です。";
     } else if (empty($_POST["password2"])) {
-       $errorMessage = 'パスワードが未入力です。';
+       $errorMessage = "パスワードが未入力です。";
     }
 
     // 入力状態でログインボタンが押された場合
     if (!empty($_POST["username"]) && !empty($_POST["password"]) && !empty($_POST["password2"]) && $_POST["password"] === $_POST["password2"]) {
-
-　　　　  // 入力したユーザIDとパスワードを格納
-　　     $username = $_POST["username"];
-　　     $password = $_POST["password"];
-　　     　
-　　     if (!preg_match('/^[0-9a-zA-Z]{2,32}$/', $_POST["username"])){
-　　      $validUsername = "ユーザー名は2文字以上で入力してください。";
-　　     }
-　　     if (!preg_match('/^[0-9a-zA-Z]{8,32}$/', $_POST["password"])){
-　　      $validPassword = "パスワードは8文字以上で入力してください。";
-　　     }
-　　     // 2. ユーザIDとパスワードが入力されていたら認証する
-　　     if (preg_match('/^[0-9a-zA-Z]{8,32}$/', $_POST["password"])){
-　　       $dsn = sprintf('mysql: host=%s; dbname=%s; charset=utf8', $db['host'], $db['dbname']);
-　　     }
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+        if (!preg_match('/^[0-9a-zA-Z]{2,32}$/', $_POST["username"])){
+         $validUsername = "ユーザー名は2文字以上で入力してください。";
+        }
+        if (!preg_match('/^[0-9a-zA-Z]{8,32}$/', $_POST["password"])){
+         $validPassword = "パスワードは8文字以上で入力してください。";
+        }
+        // 2. ユーザIDとパスワードが入力されていたら認証する
+        if (preg_match('/^[0-9a-zA-Z]{8,32}$/', $_POST["password"])){
+          $dsn = sprintf('mysql: host=%s; dbname=%s; charset=utf8', $db['host'], $db['dbname']);
+        }
 
         // 3. エラー処理
         try {
             $pdo = new PDO($dsn, $db['user'], $db['pass'], array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
-
             $stmt = $pdo->prepare("INSERT INTO userData(name, password) VALUES (?, ?)");
 
             $stmt->execute(array($username, password_hash($password, PASSWORD_DEFAULT)));  // パスワードのハッシュ化を行う（今回は文字列のみなのでbindValue(変数の内容が変わらない)を使用せず、直接excuteに渡しても問題ない）
