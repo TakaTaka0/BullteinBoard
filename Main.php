@@ -98,7 +98,7 @@ while( $res = fgets( $fp)){
 
         <?php echo $message; ?>
         <form method="post" action="Main.php">
-        名前：<input type="text" name="name" id="nameId" value="<?php echo $_SESSION["NAME"]; ?>" >
+        名前：<input type="text" name="name" id="nameId" value="" >
             <?php echo $err_msg1; ?><br>
             コメント：<input  name="comment" id="commentId" value="<?php echo $comment; ?>">
             <?php echo $err_msg2; ?><br>
