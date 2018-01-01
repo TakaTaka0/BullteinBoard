@@ -71,17 +71,6 @@ while( $res = fgets( $fp)){
     $dataArr[]= $arr;
 }
 
-// $getData = new DbManager;
-// $getData->pdo();
-// //$gotData = $getData->select('SELECT * FROM userData');
-// $getComment = 'test';
-// $tableName  = 'userData';
-// $columnName = 'comment';
-// $text = $_POST["comment"];
-// $name = $_POST["name"];
-// $gotData    = $getData->insertTable($name, $text);
-// $var->dumpValiable($gotData);
-
 ?>
 
 <!doctype html>
@@ -98,7 +87,7 @@ while( $res = fgets( $fp)){
 
         <?php echo $message; ?>
         <form method="post" action="Main.php">
-        名前：<input type="text" name="name" id="nameId" value="" >
+        名前：<input type="text" name="name" id="nameId" value="<?php echo $_SESSION["NAME"]; ?>" >
             <?php echo $err_msg1; ?><br>
             コメント：<input  name="comment" id="commentId" value="<?php echo $comment; ?>">
             <?php echo $err_msg2; ?><br>
