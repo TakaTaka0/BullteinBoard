@@ -35,7 +35,6 @@ if (  isset($_POST["send"] ) ===  true ) {
     if( $err_msg1 === "" && $err_msg2 === "" ){
         $fp = fopen( "data.txt" ,"a" );
         fwrite( $fp ,  $name."\t".$comment."\t".$history."\n");
-
         $message ="書き込みに成功しました。";
 
 
@@ -57,7 +56,7 @@ $fp = fopen("data.txt","r");
 $fpCount = fopen("data.txt","r");
 for ($count=0; fgets($fpCount); $count++){
 //var_dump($count);
-if ($count >=20){
+if ($count >=10){
   fopen("data.txt","w");
     }
 }
@@ -72,17 +71,6 @@ while( $res = fgets( $fp)){
     $dataArr[]= $arr;
 }
 
-// $getData = new DbManager;
-// $getData->pdo();
-// //$gotData = $getData->select('SELECT * FROM userData');
-// $getComment = 'test';
-// $tableName  = 'userData';
-// $columnName = 'comment';
-// $text = $_POST["comment"];
-// $name = $_POST["name"];
-// $gotData    = $getData->insertTable($name, $text);
-// $var->dumpValiable($gotData);
-
 ?>
 
 <!doctype html>
@@ -96,8 +84,10 @@ while( $res = fgets( $fp)){
         <!-- ユーザーIDにHTMLタグが含まれても良いようにエスケープする -->
         <p>ようこそ<u><?php echo htmlspecialchars($_SESSION["NAME"], ENT_QUOTES); ?></u>さん</p>  <!-- ユーザー名をechoで表示 -->
 
+
+        <?php echo $message; ?>
         <form method="post" action="Main.php">
-        名前：<input type="text" name="name" id="nameId" value="" >
+        名前：<input type="text" name="name" id="nameId" value="<?php echo $_SESSION["NAME"]; ?>" >
             <?php echo $err_msg1; ?><br>
             コメント：<input  name="comment" id="commentId" value="<?php echo $comment; ?>">
             <?php echo $err_msg2; ?><br>
