@@ -39,7 +39,7 @@ if (  isset($_POST["send"] ) ===  true ) {
 
 
         $getData    = new DbManager;
-        $getData->pdo();
+        //$getData->pdo();
         //$gotData = $getData->select('SELECT * FROM userData');
         $getComment = 'test';
         $tableName  = 'userData';
