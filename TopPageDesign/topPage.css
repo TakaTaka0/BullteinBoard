@@ -1,0 +1,52 @@
+* {
+	margin:0;
+  padding:0; 	/*全要素のマージン・パディングをリセット*/
+	line-height:1.5;	/*全要素の行の高さを1.5倍にする*/
+	color:#333333;		/*文字色*/
+  text-align:center;
+}
+#header {
+  height:42px;
+}
+
+ul#menu {
+  position:relative;
+  text-align: center;
+	height:42px;
+  width:100%;
+  padding-top: 10px;
+  background-color:#eeeeee;
+  font-weight:bold;
+  }
+
+h1 a {text-decoration:none;} 			/*リンクの下線を無くす*/
+
+li{
+  font-size: 20px;
+  padding-right:10px;
+  display:inline;			/*リスト項目をインライン表示にする*/
+	list-style-type:none;		/*リストマーカー無しにする*/
+}
+
+ul#menu a {
+  text-decoration:none; 			/*リンクの下線を無くす*/
+}
+
+
+
+/*ボタン01～05にはそれぞれ異なる背景画像を指定する*/
+/*li#menu01 {
+	width:200px; height:42px;
+}
+li#menu02 {
+	width:200px; height:42px;
+}
+li#menu03 {
+	width:200px; height:42px;
+}
+li#menu04 {
+	width:200px; height:42px;
+}
+li#menu05 {
+	width:300px; height:42px;
+}*/
